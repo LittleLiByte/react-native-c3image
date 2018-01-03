@@ -13,7 +13,7 @@ npm install react-native-c3image  --save
 use just like a normal image component.
 
 ```xquery
-import C3Image from 'react-native-placeholder-image'
+import C3Image from 'react-native-c3image'
 <C3Image
                     style={{width:200,height:200}}
                     borderRadius={100}
@@ -24,7 +24,7 @@ import C3Image from 'react-native-placeholder-image'
 if you want to change the placeholderSource and placeholderErrorSource image source,use like this:
 
 ```xquery
-import C3Image from 'react-native-placeholder-image'
+import C3Image from 'react-native-c3image'
 <C3Image
                     style={{width:200,height:200}}
                     borderRadius={100}
