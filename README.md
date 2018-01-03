@@ -4,8 +4,9 @@ react-native-placeholder-image base on the official image component,which can lo
 
 
 ## Installation
-
+```npm
 npm install react-native-c3image  --save
+```
 
 ## usage
 
