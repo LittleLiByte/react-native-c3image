@@ -1,26 +1,25 @@
 /**
  * Created by littlebyte on 2017/5/27.
  */
-import React, {Component, PropTypes} from 'react';
-import {View, Image, Animated} from 'react-native';
+import React, {Component} from 'react';
+import { bool,string, func, number,object } from 'prop-types'
+import {
+    Image,
+    ImageBackground,
+} from 'react-native';
 
-class PlaceholderImage extends Component {
+export default class C3Image extends Component{
     static propTypes = {
-        source: PropTypes.object.isRequired,
-        placeholderSource: PropTypes.number,
-        placeholderErrorSource: PropTypes.object,
-        placeholderStyle: View.propTypes.style,
-        placeholderResizeMode: PropTypes.string,
-
+        borderRadius:number,
+        source: object.isRequired,
+        placeholderSource: object,
+        placeholderErrorSource: object,
     };
 
     static defaultProps = {
-        placeholderResizeMode: 'contain',
-        placeholderStyle: {
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
+        borderRadius:0,
+        placeholderSource: {uri:'https://www.easyicon.net/api/resizeApi.php?id=1195968&size=128'},
+        placeholderErrorSource: {uri:'https://www.easyicon.net/api/resizeApi.php?id=1200633&size=128'},
     };
 
     constructor(props) {
@@ -28,7 +27,6 @@ class PlaceholderImage extends Component {
         this.state = {
             isLoaded: false,
             isError: false,
-            opacity: new Animated.Value(0)
         };
     }
 
@@ -38,12 +36,6 @@ class PlaceholderImage extends Component {
         });
     }
 
-    onLoad(){
-        Animated.timing(this.state.opacity,{
-            toValue: 0,
-            duration : 100
-        }).start()
-    }
 
     onError() {
         this.setState({
@@ -52,34 +44,41 @@ class PlaceholderImage extends Component {
     }
 
     render() {
-        return (
-            <Animated.Image
-                onLoad = {(event)=>this.onLoad()}
-                onLoadEnd={() => this.onLoadEnd()}
-                onError={() => this.onError()}
-                style={[{alignItems: 'center'}, this.props.style,]}
-                source={this.props.source}
-                resizeMode={this.props.resizeMode}
-            >
-                {
-                    this.state.isLoaded ?
-                        this.state.isError ?
+        if (this.props.source.uri || this.props.source.uri !== '') {
+            return(
+                <ImageBackground
+                    onLoadEnd={() => this.onLoadEnd()}
+                    onError={() => this.onError()}
+                    style={this.props.style}
+                    source={this.props.source}
+                    {...this.props}
+                >
+                    {
+                        this.state.isLoaded ?
+                            this.state.isError ?
+                                <Image
+                                    borderRadius={this.props.borderRadius}
+                                    style={this.props.style}
+                                    source={ this.props.placeholderErrorSource}
+                                /> :
+                                null
+                            :
                             <Image
-                                resizeMode={this.props.placeholderResizeMode}
-                                style={[this.props.placeholderStyle, this.props.style]}
-                                source={this.props.placeholderSource ? this.props.placeholderErrorSource : require('../img/icon_failure.png')}
-                            /> :
-                            null
-                        :
-                        <Image
-                            resizeMode={this.props.placeholderResizeMode}
-                            style={[this.props.placeholderStyle, this.props.style]}
-                            source={this.props.placeholderSource ? this.props.placeholderSource : require('../img/banner_logo_default@2x.png')}
-                        />
-                }
-            </Animated.Image>
-        );
+                                borderRadius={this.props.borderRadius}
+                                style={this.props.style}
+                                source={this.props.placeholderSource}
+                            />
+                    }
+                </ImageBackground>
+            )
+        } else {
+            return (
+                <Image
+                    style={this.props.style}
+                    source={ this.props.placeholderSource}
+                />
+            );
+        }
+
     }
 }
-
-export default PlaceholderImage;
