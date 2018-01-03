@@ -1,5 +1,5 @@
 # react-native-placeholder-image
-can smooth load image on both iOS and Android,and when when the image load error,this component can show the error image you set.
+this image component can  load image smoothly on both iOS and Android,and when when the image load error,this component can show the error image you set.
 
 
 
